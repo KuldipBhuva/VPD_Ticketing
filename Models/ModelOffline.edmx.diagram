@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="8c731d69ea69405a935ebe753b6f1ba7" Name="Diagram1" ZoomLevel="84">
+        <EntityTypeShape EntityType="TicketingModel.CompanyMaster" Width="1.5" PointX="5.5019686173191147" PointY="27.045917493778241" />
+        <EntityTypeShape EntityType="TicketingModel.TicketMaster" Width="1.5" PointX="4.6639427583031088" PointY="21.529764960300998" />
+        <EntityTypeShape EntityType="TicketingModel.TicketStatusMaster" Width="1.5" PointX="7.375" PointY="20.875" />
+        <EntityTypeShape EntityType="TicketingModel.TicketTran" Width="1.5" PointX="6.00375836994674" PointY="4.80077506825364" />
+        <EntityTypeShape EntityType="TicketingModel.UserLog" Width="1.5" PointX="5.2858438590941228" PointY="13.807256615630935" />
+        <EntityTypeShape EntityType="TicketingModel.UserMaster" Width="1.5" PointX="4.3631270324639635" PointY="1.535264254331246" />
+        <EntityTypeShape EntityType="TicketingModel.TicketSubType" Width="1.5" PointX="7.4630675611379864" PointY="14.57630070232614" />
+        <EntityTypeShape EntityType="TicketingModel.TicketTypeMaster" Width="1.5" PointX="7.8902719150717706" PointY="30.507719069024418" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

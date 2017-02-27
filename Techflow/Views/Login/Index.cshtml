@@ -1,0 +1,107 @@
+﻿@{
+    Layout = null;
+    ViewBag.Title = "Login";
+    
+}
+
+@using Models.ViewModel
+@model UserModel
+<html>
+
+<head>
+    <title>Login</title>
+
+    <link href="/content/bootstrap/bootstrap.min.css" rel="stylesheet" />
+    <script src="/content/bootstrap/jquery.min.js"></script>
+    <script src="/content/bootstrap/bootstrap.min.js"></script>
+    <link href="/Content/css/Login.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+    <div class="row" id="pwd-container">
+        <div class="col-md-4"></div>
+
+        <div class="col-md-4">
+            <section class="login-form">
+                <form method="post" action="/Login/Index" id="loginform" name="frmLogin" role="login">
+
+                    @*<img src="http://i.imgur.com/RcmcLv4.png" class="img-responsive" alt="" />*@
+                    <img src="/Content/images/logo.png" class="img-responsive" alt="logo" style="width:120px;"/>
+                    @*<input type="email" name="email" placeholder="Email" required class="form-control input-lg" value="joestudent@gmail.com" />*@
+                    @Html.TextBoxFor(m => m.UserName, new { @placeholder = "Username", @required = "required", @id = "user_name", @name = "Username", @autocomplete = "off", @class = "form-control input-lg" })
+                    @Html.ValidationMessageFor(m => m.UserName)
+
+                    @*<input type="password" class="form-control input-lg" id="password" placeholder="Password" required="" />*@
+                    @Html.TextBoxFor(m => m.Password, new { @placeholder = "Password", @type = "password", @id = "user_pwd", @name = "Password", @autocomplete = "off", @class = "form-control input-lg" })
+                    @Html.ValidationMessageFor(m => m.Password)
+
+                    <div class="pwstrength_viewport_progress"></div>
+                    <label>
+                        <input type="checkbox" value="forever" id="rememberme" name="rememberme">
+                        Remember Me</label><label style="float: right; color: red;">@if (TempData["EMsg"] != null)
+                                                                                    { @TempData["EMsg"].ToString()}</label>
+
+                    <button type="submit" name="go" class="btn btn-lg btn-primary btn-block">Sign in</button>
+                    <div>
+                        @*<a href="#">Create account</a> or *@<a data-toggle="modal" data-target="#ModalRP" href="#">forgott password</a>
+                    </div>
+
+                </form>
+
+                @*<div class="form-links">
+                    <a href="#">www.url.com</a>
+                </div>*@
+            </section>
+        </div>
+
+        <div class="col-md-4"></div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="ModalRP" role="dialog">
+            <div class="modal-dialog modal-lg">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Forgott Password</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <form method="post" action="/Login/ResetPwd">
+                                @*@Html.Label("* Old Password", new { @class = "col-sm-2 control-label" })
+                            <div class="col-sm-4">
+                                <input type="password" name="txtOpwd" class="form-control" required />
+                            </div>*@
+                                @Html.Label("* Email", new { @class = "col-sm-2 control-label" })
+                                <div class="col-sm-4">
+                                    <input type="email" name="txtEmail" class="form-control" required />
+                                </div>
+                                <div class="col-sm-12" style="height: 5px;"></div>
+                                @*@Html.Label("* New Password", new { @class = "col-sm-2 control-label" })
+                            <div class="col-sm-4">
+                                <input type="password" name="txtNpwd" class="form-control" required />
+                            </div>
+                            @Html.Label("* Confirm New Password", new { @class = "col-sm-2 control-label" })
+                            <div class="col-sm-4">
+                                <input type="password" name="txtNCpwd" class="form-control" required />
+                            </div>*@
+                                <input type="submit" value="Submit" class="btn btn-primary" onclick="return confirm('Are You Really Forgot Password?')" />
+                            </form>
+                        </div>
+                    </div>
+                    <div class="modal-footer" style="border: none;">
+
+                        @*<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>*@
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>
+
+

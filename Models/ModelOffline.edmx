@@ -1,0 +1,539 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="TicketingModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="TicketingModelStoreContainer">
+          <EntitySet Name="CompanyMaster" EntityType="TicketingModel.Store.CompanyMaster" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="TicketMaster" EntityType="TicketingModel.Store.TicketMaster" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="TicketStatusMaster" EntityType="TicketingModel.Store.TicketStatusMaster" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="TicketSubType" EntityType="TicketingModel.Store.TicketSubType" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="TicketTran" EntityType="TicketingModel.Store.TicketTran" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="TicketTypeMaster" EntityType="TicketingModel.Store.TicketTypeMaster" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="UserLog" EntityType="TicketingModel.Store.UserLog" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="UserMaster" EntityType="TicketingModel.Store.UserMaster" store:Type="Tables" Schema="dbo" />
+        </EntityContainer>
+        <EntityType Name="CompanyMaster">
+          <Key>
+            <PropertyRef Name="CompID" />
+          </Key>
+          <Property Name="CompID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="varchar" MaxLength="250" />
+          <Property Name="LegalName" Type="varchar" MaxLength="250" />
+          <Property Name="ACType" Type="varchar" MaxLength="150" />
+          <Property Name="Industry" Type="varchar" MaxLength="250" />
+          <Property Name="Description" Type="varchar" MaxLength="250" />
+          <Property Name="Phone" Type="varchar" MaxLength="50" />
+          <Property Name="AltPhone" Type="varchar" MaxLength="50" />
+          <Property Name="Fax" Type="varchar" MaxLength="50" />
+          <Property Name="Email1" Type="varchar" MaxLength="150" />
+          <Property Name="Email2" Type="varchar" MaxLength="150" />
+          <Property Name="Website" Type="varchar" MaxLength="150" />
+          <Property Name="BStreet" Type="varchar" MaxLength="150" />
+          <Property Name="BCity" Type="varchar" MaxLength="150" />
+          <Property Name="BState" Type="varchar" MaxLength="150" />
+          <Property Name="BPostCode" Type="varchar" MaxLength="50" />
+          <Property Name="BCountry" Type="varchar" MaxLength="50" />
+          <Property Name="SStreet" Type="varchar" MaxLength="150" />
+          <Property Name="SCity" Type="varchar" MaxLength="150" />
+          <Property Name="SState" Type="varchar" MaxLength="150" />
+          <Property Name="SPostCode" Type="varchar" MaxLength="50" />
+          <Property Name="SCountry" Type="varchar" MaxLength="50" />
+          <Property Name="ContactPerson" Type="varchar" MaxLength="150" />
+          <Property Name="ABN" Type="varchar" MaxLength="50" />
+          <Property Name="BHour" Type="varchar" MaxLength="50" />
+          <Property Name="ServiceStatus" Type="varchar" MaxLength="50" />
+          <Property Name="Status" Type="int" />
+        </EntityType>
+        <EntityType Name="TicketMaster">
+          <Key>
+            <PropertyRef Name="TicketID" />
+          </Key>
+          <Property Name="TicketID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Subject" Type="varchar" MaxLength="150" />
+          <Property Name="Description" Type="varchar(max)" />
+          <Property Name="AssignTo" Type="int" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="UpdatedBy" Type="int" />
+          <Property Name="UpdatedDate" Type="datetime" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="SenderEmail" Type="varchar" MaxLength="150" />
+          <Property Name="TicketTypeID" Type="int" />
+          <Property Name="TicketStatusID" Type="int" />
+          <Property Name="Priority" Type="int" />
+          <Property Name="Prefix" Type="varchar" MaxLength="10" />
+          <Property Name="CompID" Type="int" />
+          <Property Name="SubType" Type="int" />
+        </EntityType>
+        <EntityType Name="TicketStatusMaster">
+          <Key>
+            <PropertyRef Name="TicketStatusID" />
+          </Key>
+          <Property Name="TicketStatusID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="TicketStatus" Type="varchar" MaxLength="250" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="TicketSubType">
+          <Key>
+            <PropertyRef Name="TTSID" />
+          </Key>
+          <Property Name="TTSID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="TypeID" Type="int" />
+          <Property Name="SubType" Type="varchar" MaxLength="450" />
+          <Property Name="SubDesc" Type="varchar(max)" />
+          <Property Name="Status" Type="bit" />
+        </EntityType>
+        <EntityType Name="TicketTran">
+          <Key>
+            <PropertyRef Name="TTranID" />
+          </Key>
+          <Property Name="TTranID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="TicketID" Type="int" />
+          <Property Name="AssignTo" Type="int" />
+          <Property Name="Comment" Type="varchar" MaxLength="250" />
+          <Property Name="FileName" Type="varchar" MaxLength="550" />
+          <Property Name="FileURL" Type="varchar" MaxLength="550" />
+          <Property Name="ReplayBy" Type="int" />
+          <Property Name="ReplayDate" Type="datetime" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="Prefix" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="TicketTypeMaster">
+          <Key>
+            <PropertyRef Name="TicketTypeID" />
+          </Key>
+          <Property Name="TicketTypeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="TicketType" Type="varchar" MaxLength="250" />
+          <Property Name="Description" Type="varchar(max)" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="UserLog">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="UID" Type="int" Nullable="false" />
+          <Property Name="DateTime" Type="datetime" />
+          <Property Name="IPAddress" Type="varchar" MaxLength="150" />
+        </EntityType>
+        <EntityType Name="UserMaster">
+          <Key>
+            <PropertyRef Name="UID" />
+          </Key>
+          <Property Name="UID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="CompID" Type="int" />
+          <Property Name="Role" Type="int" />
+          <Property Name="Title" Type="varchar" MaxLength="50" />
+          <Property Name="FirstName" Type="varchar" MaxLength="250" />
+          <Property Name="LastName" Type="varchar" MaxLength="250" />
+          <Property Name="UserName" Type="varchar" MaxLength="350" />
+          <Property Name="Password" Type="varchar" MaxLength="150" />
+          <Property Name="Phone" Type="varchar" MaxLength="50" />
+          <Property Name="Email" Type="varchar" MaxLength="250" />
+          <Property Name="Address" Type="varchar(max)" />
+          <Property Name="City" Type="varchar" MaxLength="150" />
+          <Property Name="PostCode" Type="varchar" MaxLength="50" />
+          <Property Name="Country" Type="varchar" MaxLength="150" />
+          <Property Name="Status" Type="int" />
+          <Property Name="ReqQ" Type="bit" />
+          <Property Name="Power" Type="bit" />
+          <Property Name="Access" Type="bit" />
+          <Property Name="Tickets" Type="bit" />
+          <Property Name="Portal" Type="bit" />
+          <Property Name="Invoice" Type="bit" />
+          <Property Name="mobile" Type="decimal" Precision="15" />
+        </EntityType>
+        <Function Name="SP_getTicketTran" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="uid" Type="int" Mode="In" />
+          <Parameter Name="rid" Type="int" Mode="In" />
+          <Parameter Name="tid" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_TotalPU" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="yr" Type="varchar" Mode="In" />
+        </Function>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TicketingModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="techflowEntities" p1:LazyLoadingEnabled="true">
+          <FunctionImport Name="SP_StaffWiseReport" ReturnType="Collection(TicketingModel.SP_StaffWiseReport_Result)">
+            <Parameter Name="sid" Mode="In" Type="Int32" />
+            <Parameter Name="ToDt" Mode="In" Type="DateTime" />
+            <Parameter Name="FrmDt" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="SP_getTicketTran" ReturnType="Collection(TicketingModel.SP_getTicketTran_Result)">
+            <Parameter Name="uid" Mode="In" Type="Int32" />
+            <Parameter Name="rid" Mode="In" Type="Int32" />
+            <Parameter Name="tid" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_TotalPU" ReturnType="Collection(TicketingModel.SP_TotalPU_Result)">
+          <Parameter Name="yr" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="CompanyMasters" EntityType="TicketingModel.CompanyMaster" />
+          <EntitySet Name="TicketMasters" EntityType="TicketingModel.TicketMaster" />
+          <EntitySet Name="TicketStatusMasters" EntityType="TicketingModel.TicketStatusMaster" />
+          <EntitySet Name="TicketTrans" EntityType="TicketingModel.TicketTran" />
+          <EntitySet Name="UserLogs" EntityType="TicketingModel.UserLog" />
+          <EntitySet Name="UserMasters" EntityType="TicketingModel.UserMaster" />
+          <EntitySet Name="TicketSubTypes" EntityType="TicketingModel.TicketSubType" />
+          <EntitySet Name="TicketTypeMasters" EntityType="TicketingModel.TicketTypeMaster" />
+        </EntityContainer>
+        <ComplexType Name="SP_StaffWiseReport_Result">
+          <Property Type="String" Name="CompName" Nullable="true" MaxLength="250" />
+          <Property Type="Int32" Name="Open" Nullable="true" />
+          <Property Type="Int32" Name="Resolved" Nullable="true" />
+          <Property Type="Int32" Name="OnHold" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="SP_getTicketTran_Result">
+          <Property Type="Int32" Name="TTranID" Nullable="false" />
+          <Property Type="Int32" Name="TicketID" Nullable="true" />
+          <Property Type="Int32" Name="AssignTo" Nullable="true" />
+          <Property Type="String" Name="Comment" Nullable="true" />
+          <Property Type="String" Name="FileName" Nullable="true" MaxLength="550" />
+          <Property Type="String" Name="FileURL" Nullable="true" MaxLength="550" />
+          <Property Type="Int32" Name="ReplayBy" Nullable="true" />
+          <Property Type="DateTime" Name="ReplayDate" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="CreatedBy" Nullable="true" />
+          <Property Type="DateTime" Name="CreatedDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="Prefix" Nullable="true" MaxLength="10" />
+          <Property Type="Int32" Name="Role" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="SP_TotalPU_Result">
+          <Property Type="Int32" Name="TTyear" Nullable="true" />
+          <Property Type="String" Name="TTmonth" Nullable="true" MaxLength="30" />
+          <Property Type="Decimal" Name="TotalPC" Nullable="true" Precision="38" Scale="2" />
+          <Property Type="Decimal" Name="TotalPU" Nullable="true" Precision="38" Scale="2" />
+        </ComplexType>
+        <EntityType Name="CompanyMaster">
+          <Key>
+            <PropertyRef Name="CompID" />
+          </Key>
+          <Property Type="Int32" Name="CompID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="LegalName" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ACType" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Industry" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Description" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Phone" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="AltPhone" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Fax" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Email1" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Email2" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Website" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="BStreet" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="BCity" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="BState" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="BPostCode" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="BCountry" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="SStreet" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="SCity" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="SState" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="SPostCode" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="SCountry" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ContactPerson" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ABN" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="BHour" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ServiceStatus" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="Status" />
+        </EntityType>
+        <EntityType Name="TicketMaster">
+          <Key>
+            <PropertyRef Name="TicketID" />
+          </Key>
+          <Property Type="Int32" Name="TicketID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Subject" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Description" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="AssignTo" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="CreatedDate" Precision="3" />
+          <Property Type="Int32" Name="UpdatedBy" />
+          <Property Type="DateTime" Name="UpdatedDate" Precision="3" />
+          <Property Type="Boolean" Name="IsActive" />
+          <Property Type="String" Name="SenderEmail" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="TicketTypeID" />
+          <Property Type="Int32" Name="TicketStatusID" />
+          <Property Type="Int32" Name="Priority" />
+          <Property Type="String" Name="Prefix" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="CompID" />
+          <Property Type="Int32" Name="SubType" />
+        </EntityType>
+        <EntityType Name="TicketStatusMaster">
+          <Key>
+            <PropertyRef Name="TicketStatusID" />
+          </Key>
+          <Property Type="Int32" Name="TicketStatusID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="TicketStatus" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Type="Boolean" Name="IsActive" />
+        </EntityType>
+        <EntityType Name="TicketTran">
+          <Key>
+            <PropertyRef Name="TTranID" />
+          </Key>
+          <Property Type="Int32" Name="TTranID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="TicketID" />
+          <Property Type="Int32" Name="AssignTo" />
+          <Property Type="String" Name="Comment" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="FileName" MaxLength="550" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="FileURL" MaxLength="550" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="ReplayBy" />
+          <Property Type="DateTime" Name="ReplayDate" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="CreatedDate" Precision="3" />
+          <Property Type="String" Name="Prefix" MaxLength="10" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="UserLog">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="UID" Nullable="false" />
+          <Property Type="DateTime" Name="DateTime" Precision="3" />
+          <Property Type="String" Name="IPAddress" MaxLength="150" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="UserMaster">
+          <Key>
+            <PropertyRef Name="UID" />
+          </Key>
+          <Property Type="Int32" Name="UID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="CompID" />
+          <Property Type="Int32" Name="Role" />
+          <Property Type="String" Name="Title" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="FirstName" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="LastName" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="UserName" MaxLength="350" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Password" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Phone" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Email" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Address" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="City" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="PostCode" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Country" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="Status" />
+          <Property Type="Boolean" Name="ReqQ" />
+          <Property Type="Boolean" Name="Power" />
+          <Property Type="Boolean" Name="Access" />
+          <Property Type="Boolean" Name="Tickets" />
+          <Property Type="Boolean" Name="Portal" />
+          <Property Type="Boolean" Name="Invoice" />
+          <Property Type="Decimal" Name="mobile" Precision="15" Scale="0" />
+        </EntityType>
+        <EntityType Name="TicketSubType">
+          <Key>
+            <PropertyRef Name="TTSID" />
+          </Key>
+          <Property Type="Int32" Name="TTSID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="TypeID" />
+          <Property Type="String" Name="SubType" MaxLength="450" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="SubDesc" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Type="Boolean" Name="Status" />
+        </EntityType>
+        <EntityType Name="TicketTypeMaster">
+          <Key>
+            <PropertyRef Name="TicketTypeID" />
+          </Key>
+          <Property Type="Int32" Name="TicketTypeID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="TicketType" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Type="Boolean" Name="IsActive" />
+          <Property Type="String" Name="Description" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TicketingModelStoreContainer" CdmEntityContainer="techflowEntities">
+          <FunctionImportMapping FunctionImportName="SP_getTicketTran" FunctionName="TicketingModel.Store.SP_getTicketTran">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TicketingModel.SP_getTicketTran_Result">
+                <ScalarProperty Name="TTranID" ColumnName="TTranID" />
+                <ScalarProperty Name="TicketID" ColumnName="TicketID" />
+                <ScalarProperty Name="AssignTo" ColumnName="AssignTo" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="FileURL" ColumnName="FileURL" />
+                <ScalarProperty Name="ReplayBy" ColumnName="ReplayBy" />
+                <ScalarProperty Name="ReplayDate" ColumnName="ReplayDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Prefix" ColumnName="Prefix" />
+                <ScalarProperty Name="Role" ColumnName="Role" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_TotalPU" FunctionName="TicketingModel.Store.SP_TotalPU">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TicketingModel.SP_TotalPU_Result">
+                <ScalarProperty Name="TTyear" ColumnName="TTyear" />
+                <ScalarProperty Name="TTmonth" ColumnName="TTmonth" />
+                <ScalarProperty Name="TotalPC" ColumnName="TotalPC" />
+                <ScalarProperty Name="TotalPU" ColumnName="TotalPU" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="CompanyMasters">
+            <EntityTypeMapping TypeName="TicketingModel.CompanyMaster">
+              <MappingFragment StoreEntitySet="CompanyMaster">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="ServiceStatus" ColumnName="ServiceStatus" />
+                <ScalarProperty Name="BHour" ColumnName="BHour" />
+                <ScalarProperty Name="ABN" ColumnName="ABN" />
+                <ScalarProperty Name="ContactPerson" ColumnName="ContactPerson" />
+                <ScalarProperty Name="SCountry" ColumnName="SCountry" />
+                <ScalarProperty Name="SPostCode" ColumnName="SPostCode" />
+                <ScalarProperty Name="SState" ColumnName="SState" />
+                <ScalarProperty Name="SCity" ColumnName="SCity" />
+                <ScalarProperty Name="SStreet" ColumnName="SStreet" />
+                <ScalarProperty Name="BCountry" ColumnName="BCountry" />
+                <ScalarProperty Name="BPostCode" ColumnName="BPostCode" />
+                <ScalarProperty Name="BState" ColumnName="BState" />
+                <ScalarProperty Name="BCity" ColumnName="BCity" />
+                <ScalarProperty Name="BStreet" ColumnName="BStreet" />
+                <ScalarProperty Name="Website" ColumnName="Website" />
+                <ScalarProperty Name="Email2" ColumnName="Email2" />
+                <ScalarProperty Name="Email1" ColumnName="Email1" />
+                <ScalarProperty Name="Fax" ColumnName="Fax" />
+                <ScalarProperty Name="AltPhone" ColumnName="AltPhone" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Industry" ColumnName="Industry" />
+                <ScalarProperty Name="ACType" ColumnName="ACType" />
+                <ScalarProperty Name="LegalName" ColumnName="LegalName" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="CompID" ColumnName="CompID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TicketMasters">
+            <EntityTypeMapping TypeName="TicketingModel.TicketMaster">
+              <MappingFragment StoreEntitySet="TicketMaster">
+                <ScalarProperty Name="SubType" ColumnName="SubType" />
+                <ScalarProperty Name="CompID" ColumnName="CompID" />
+                <ScalarProperty Name="Prefix" ColumnName="Prefix" />
+                <ScalarProperty Name="Priority" ColumnName="Priority" />
+                <ScalarProperty Name="TicketStatusID" ColumnName="TicketStatusID" />
+                <ScalarProperty Name="TicketTypeID" ColumnName="TicketTypeID" />
+                <ScalarProperty Name="SenderEmail" ColumnName="SenderEmail" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="AssignTo" ColumnName="AssignTo" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Subject" ColumnName="Subject" />
+                <ScalarProperty Name="TicketID" ColumnName="TicketID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TicketStatusMasters">
+            <EntityTypeMapping TypeName="TicketingModel.TicketStatusMaster">
+              <MappingFragment StoreEntitySet="TicketStatusMaster">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="TicketStatus" ColumnName="TicketStatus" />
+                <ScalarProperty Name="TicketStatusID" ColumnName="TicketStatusID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TicketTrans">
+            <EntityTypeMapping TypeName="TicketingModel.TicketTran">
+              <MappingFragment StoreEntitySet="TicketTran">
+                <ScalarProperty Name="Prefix" ColumnName="Prefix" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ReplayDate" ColumnName="ReplayDate" />
+                <ScalarProperty Name="ReplayBy" ColumnName="ReplayBy" />
+                <ScalarProperty Name="FileURL" ColumnName="FileURL" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="AssignTo" ColumnName="AssignTo" />
+                <ScalarProperty Name="TicketID" ColumnName="TicketID" />
+                <ScalarProperty Name="TTranID" ColumnName="TTranID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserLogs">
+            <EntityTypeMapping TypeName="TicketingModel.UserLog">
+              <MappingFragment StoreEntitySet="UserLog">
+                <ScalarProperty Name="IPAddress" ColumnName="IPAddress" />
+                <ScalarProperty Name="DateTime" ColumnName="DateTime" />
+                <ScalarProperty Name="UID" ColumnName="UID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserMasters">
+            <EntityTypeMapping TypeName="TicketingModel.UserMaster">
+              <MappingFragment StoreEntitySet="UserMaster">
+                <ScalarProperty Name="mobile" ColumnName="mobile" />
+                <ScalarProperty Name="Invoice" ColumnName="Invoice" />
+                <ScalarProperty Name="Portal" ColumnName="Portal" />
+                <ScalarProperty Name="Tickets" ColumnName="Tickets" />
+                <ScalarProperty Name="Access" ColumnName="Access" />
+                <ScalarProperty Name="Power" ColumnName="Power" />
+                <ScalarProperty Name="ReqQ" ColumnName="ReqQ" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="PostCode" ColumnName="PostCode" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Role" ColumnName="Role" />
+                <ScalarProperty Name="CompID" ColumnName="CompID" />
+                <ScalarProperty Name="UID" ColumnName="UID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TicketSubTypes">
+            <EntityTypeMapping TypeName="TicketingModel.TicketSubType">
+              <MappingFragment StoreEntitySet="TicketSubType">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="SubDesc" ColumnName="SubDesc" />
+                <ScalarProperty Name="SubType" ColumnName="SubType" />
+                <ScalarProperty Name="TypeID" ColumnName="TypeID" />
+                <ScalarProperty Name="TTSID" ColumnName="TTSID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TicketTypeMasters">
+            <EntityTypeMapping TypeName="TicketingModel.TicketTypeMaster">
+              <MappingFragment StoreEntitySet="TicketTypeMaster">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="TicketType" ColumnName="TicketType" />
+                <ScalarProperty Name="TicketTypeID" ColumnName="TicketTypeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,671 @@
+﻿@{
+    ViewBag.Title = "Reply";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@using Models;
+@using Models.ViewModel;
+<style>
+    pre
+    {
+        background-color: #ebebeb;
+        border: none;
+    }
+
+    .right
+    {
+        position: relative;
+        background: #ebebeb;
+        text-align: left;
+        min-width: 45%;
+        padding: 10px 15px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        float: right;
+        right: 20px;
+    }
+
+        .right::before
+        {
+            content: '';
+            position: absolute;
+            visibility: visible;
+            top: -1px;
+            right: -10px;
+            border: 10px solid transparent;
+            border-top: 10px solid #ccc;
+        }
+
+        .right::after
+        {
+            content: '';
+            position: absolute;
+            visibility: visible;
+            top: 0px;
+            right: -8px;
+            border: 10px solid transparent;
+            border-top: 10px solid #ebebeb;
+            clear: both;
+        }
+
+    .left
+    {
+        position: relative;
+        background: #ebebeb;
+        text-align: left;
+        min-width: 45%;
+        padding: 10px 15px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        float: left;
+        right: 20px;
+    }
+
+        .left::before
+        {
+            content: '';
+            position: absolute;
+            visibility: visible;
+            top: -1px;
+            left: -10px;
+            border: 10px solid transparent;
+            border-top: 10px solid #ccc;
+        }
+
+        .left::after
+        {
+            content: '';
+            position: absolute;
+            visibility: visible;
+            top: 0px;
+            left: -8px;
+            border: 10px solid transparent;
+            border-top: 10px solid #ebebeb;
+            clear: both;
+        }
+</style>
+<style type="text/css">
+    .thumb-image
+    {
+        float: left;
+        width: 250px;
+        height: 200px;
+        border: 1px solid #5bc0de;
+        position: relative;
+        padding: 5px;
+    }
+</style>
+@using Models.ViewModel
+@model TicketModel
+@using (@Html.BeginForm("Replay", "Ticket", FormMethod.Post, new { @id = "frmComp", enctype = "multipart/form-data" }))
+{  
+
+    @Html.HiddenFor(m => m.TicketID)
+    @Html.HiddenFor(m => m.CreatedBy)
+    @Html.HiddenFor(m => m.CreatedDate)
+    @Html.HiddenFor(m => m.IsActive)   
+    @Html.HiddenFor(m => m.Prefix)
+    @Html.HiddenFor(m => m.CompID)
+    <!-- **Breadcrumb Section** -->
+    <div class="breadcrumb-section">
+        <div class="container">
+            <h1>Ticket</h1>
+            <div class="breadcrumb">
+                <a href="/Dashboard/Index" title="">Home</a> / <span>Ticket</span>
+            </div>
+        </div>
+    </div>
+    <!-- **Breadcrumb Section Ends** -->
+    
+    <!-- **Content Main** -->
+    <section class="content-main">
+        <!-- **Container** -->
+        <div class="container">
+            @{techflowEntities Dbcontext = new techflowEntities();
+              int rid = 0;
+              int uid = 0;
+              if (Session["Role"] != null)
+              {
+                  rid = Convert.ToInt32(Session["Role"].ToString());
+              }
+              if (Session["UID"] != null)
+              {
+                  uid = Convert.ToInt32(Session["UID"].ToString());
+              }
+
+              var assign = Dbcontext.UserMasters.Where(m => m.UID == Model.AssignTo).SingleOrDefault();
+
+              if (rid == 1 || rid == 4)
+              {              
+                <div class="panel panel-info col-sm-2" style="background-image: url(/Content/images/fullwidth-bg/pattern-bg1.jpg); background-position: 50% 49px; box-shadow: 0px 0px 5px 1px;">
+                    <div class="panel-heading">
+                        <i class="fa fa-user"></i>&nbsp;@Model.UserDetails.Title @Model.UserDetails.FirstName @Model.UserDetails.LastName
+                    </div>
+                    <div class="panel-body" style="padding: 0px; overflow-wrap: break-word;">
+
+
+                        <b>Company :</b>@if (Model.CompDetails != null)
+                                        { @Model.CompDetails.Name}<br />
+                        <b>Ticket ID : </b>@Model.Prefix@Model.TicketID<br />
+                        <b>Category : </b>@Model.TTypeDetails.TicketType<br />
+                        <b>Sub Category :</b>@Model.TTypeDetails.SubType<br />
+                        <b>Priority : </b>@if (@Model.Priority == 1)
+                                          {
+                            <span class="label label-danger">High</span>
+                                          }
+                                          else if (@Model.Priority == 2)
+                                          {
+                            <span class="label label-success">Medium</span>
+                                          }
+                                          else if (@Model.Priority == 3)
+                                          {
+                            <span class="label label-info">Normal</span>   
+                                          }
+                                          else
+                                          {
+                            <span class="label label-default">Other</span>   
+                                          }<br />
+                        <b>Phone :</b> @Model.UserDetails.Phone<br />
+                        <b>Email :</b>@Model.UserDetails.Email<br />
+                        <b>City : </b>@Model.UserDetails.City
+                    </div>
+                </div>
+                <div class="panel panel-info col-sm-10" style="background-image: url(/Content/images/fullwidth-bg/pattern-bg1.jpg); background-position: 50% 49px; box-shadow: 0px 0px 5px 1px;">
+                    <div class="panel-heading" style="position: relative;">
+                        <i class="fa fa-comments-o" aria-hidden="true"></i>&nbsp;Ticket Conversation
+                      
+
+                    </div>
+                    <div class="panel-body">
+                        @*@if (Model.Quotedetails != null || Model.Deldetails != null || Model.Accessdetails != null)
+                        {
+                            <div style="float: left;">
+                                <a href="#" data-toggle="modal" data-target="#myModal">View Quotation Detail</a>
+                            </div>
+                        }*@
+                        @*
+                        <div class="left col-sm-10">
+                            <span class="label label-success">@Model.UserDetails.Title @Model.UserDetails.FirstName @Model.UserDetails.LastName </span>
+                            <br />
+                            <pre style="border: none; color: black; background-color: inherit; margin-bottom: -10px;">@Model.Description</pre>
+                            <p style="font-size: smaller; margin-left: 10px;">@Convert.ToDateTime(Model.CreatedDate).ToString("dd/MM/yyyy HH:mm")</p>
+                        </div>*@
+                        <div class="col-sm-10" style="height: 5px;"></div>
+
+                        @foreach (var i in Model.ListTicketTran)
+                        {
+
+                            if (i.UserDetails.Role == 1 || i.UserDetails.Role == 4)
+                            {
+                            <div class="right col-sm-10" style="padding: 5px; margin: 5px;">
+                              @*  @if(@i.ReplayBy==i.UserDetails.UID)
+                                {
+                                    <span class="label label-primary">You</span><br />
+                                }
+                                else
+                                {
+                                *@<span class="label label-primary">@i.UserDetails.Title @i.UserDetails.FirstName @i.UserDetails.LastName</span><br />
+                                @*}*@
+                                @if (@i.Comment != null)
+                                {
+                                    <pre style="border: none; color: black; background-color: inherit; margin-bottom: -10px;">@i.Comment</pre>
+                                }
+                                @if (@i.FileName != null)
+                                {
+                                    <a href="@i.FileURL" target="_blank">
+                                        <img alt="attachment" style="margin-top:5px;" src="@i.FileURL" height="200px" width="250px" onError="this.onerror=null;this.src='/Content/images/File_Download.png';" class="img-rounded">
+                                    </a>
+                                    <span style="margin-left: 15px;">@i.FileName</span>
+                                }
+                                <p style="font-size: smaller; margin-left: 10px;">
+                                    @if (@i.ReplayDate != null)
+                                    {@Convert.ToDateTime(@i.ReplayDate).ToString("dd/MM/yyyy HH:mm")}
+                                    else
+                                    {@Convert.ToDateTime(@i.CreatedDate).ToString("dd/MM/yyyy HH:mm")}
+                                </p>
+                            </div>
+                    
+                            }
+                            else
+                            {
+                            <div class="left col-sm-10" style="padding: 5px; margin: 5px;">
+                                @if(@i.ReplayBy==null)
+                                {
+                                <span class="label label-success">@Model.UserDetails.Title @Model.UserDetails.FirstName @Model.UserDetails.LastName </span>
+                                }
+                                else
+                                {
+                                    
+                                    <span class="label label-success">@i.UserDetails.Title @i.UserDetails.FirstName @i.UserDetails.LastName </span>
+                                }
+                                <br />
+                                @if (@i.Comment != null)
+                                {
+                                    <pre style="border: none; color: black; background-color: inherit; margin-bottom: -10px;">@i.Comment</pre>
+                                }
+                                @if (@i.FileName != null)
+                                {
+                                    <a href="@i.FileURL" target="_blank">
+                                        <img alt="attachment" style="margin-top:5px;" src="@i.FileURL" height="200px" width="250px" onError="this.onerror=null;this.src='/Content/images/File_Download.png';" class="img-rounded">
+                                    </a>
+                                    <span style="margin-left: 15px;">@i.FileName</span>
+                                }
+                                <p style="font-size: smaller; margin-left: 10px;">
+                                    @if (@i.ReplayDate != null)
+                                    {@Convert.ToDateTime(@i.ReplayDate).ToString("dd/MM/yyyy HH:mm")}
+                                    else
+                                    {@Convert.ToDateTime(@i.CreatedDate).ToString("dd/MM/yyyy HH:mm")}
+                                </p>
+                            </div>
+                               
+                            }
+@*foreach (var at in Model.ListTA)
+                            {
+
+                            if (uid == @at.ReplayBy)
+                            {
+                            <div class="right col-sm-10" style="padding: 5px; margin: 5px;">
+                                <span class="label label-success">@Model.UserDetails.Title @Model.UserDetails.FirstName @Model.UserDetails.LastName </span>
+                                <br />
+                                <a href="@at.FileURL" target="_blank">
+
+
+                                    <img alt="product" src="@at.FileURL" height="200px" width="250px" onerror="this.onerror=null;this.src='/Content/images/File_Download.png';" class="img-rounded">
+                                </a>
+                                <span style="margin-left: 15px;">@at.FileName</span>
+                                <p style="font-size: smaller; margin-left: 10px;">@Convert.ToDateTime(@i.ReplayDate).ToString("dd/MM/yyyy HH:mm")</p>
+
+                            </div>
+                            }
+                            else
+                            {
+                            <div class="left col-sm-10" style="padding: 5px; margin: 5px;">
+                                <span class="label label-success">@Model.UserDetails.Title @Model.UserDetails.FirstName @Model.UserDetails.LastName </span>
+                                <br />
+                                <a href="@at.FileURL" target="_blank">
+                                    <img alt="product" src="@at.FileURL" height="200px" width="250px" onerror="this.onerror=null;this.src='/Content/images/File_Download.png';" class="img-rounded"></a>
+                                <span style="margin-left: 15px;">@at.FileName</span>
+                                <p style="font-size: smaller; margin-left: 10px;">@Convert.ToDateTime(@i.ReplayDate).ToString("dd/MM/yyyy HH:mm")</p>
+                            </div>
+                            }
+
+                            }*@
+
+                        }
+
+                        <div class="right col-lg-1" id="dvImg1" style="padding: 5px; margin: 5px;">
+
+                            <div id="image-holder" style="float: right;" class="img-rounded"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-2"></div>
+                        if (rid == 1 && Model.AssignTo == null)
+                        {
+                
+                <div class="panel panel-default col-sm-10">
+                    <div class="panel-body">
+                        <div class="col-sm-12">
+                            <div class="input-group">
+
+                                @Html.TextAreaFor(m => m.Comment, new { @class = "form-control", @style = "height:200px;" })
+                                @*@Html.ValidationMessageFor(m=>m.Comment)*@
+                                <span class="input-group-btn">
+                                    <button class="btn btn-success" type="submit">Send</button>
+                                </span>
+                            </div>
+
+                        </div>
+                        <div class="col-sm-12" style="height: 10px;"></div>
+                        @if (rid == 1)
+                        {
+                            <div class="col-sm-6" style="display: block; position: relative; float: left; top: -5px;">
+
+                                @*<div class="input-group">*@
+                                @Html.DropDownListFor(m => m.TicketStatusID, new SelectList(Model.ListTstatus, "TicketStatusID", "TicketStatus"), "--Select Status--", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.TicketStatusID)
+                                @Html.HiddenFor(m => m.TicketStatusID)
+                                @*<span class="input-group-btn">
+                                        <button class="btn btn-danger" type="submit">Change Status</button>
+                                    </span>
+                                </div>*@
+
+                            </div>
+                            @Html.HiddenFor(m => m.AssignTo)
+@*<div class="col-sm-3" style="display: block; position: relative; float: left; top: -5px;">
+
+                                @Html.DropDownListFor(m => m.AssignTo, new SelectList(Model.StaffList, "UID", "FirstName"), "--Select Staff--", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.AssignTo)
+
+                            </div>*@
+                        }
+                        else if (rid == 4)
+                        {
+                            <div class="col-sm-6" style="display: block; position: relative; float: left; top: -5px;">
+
+                                @*<div class="input-group">*@
+                                @Html.DropDownListFor(m => m.TicketStatusID, new SelectList(Model.ListTstatus, "TicketStatusID", "TicketStatus"), "--Select Status--", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.TicketStatusID)
+                                @Html.HiddenFor(m => m.TicketStatusID)
+                                @*<span class="input-group-btn">
+                                        <button class="btn btn-danger" type="submit">Change Status</button>
+                                    </span>
+                                </div>*@
+                                @Html.HiddenFor(m => m.AssignTo)
+                            </div>
+                    
+                        }
+
+                        <div class="col-sm-6" style="display: block; position: relative; float: right; top: -5px; margin-right: -63px;">
+
+                            @*<input type="file" class="form-control btn btn-primary" />*@
+                            <input type="file" id="file" multiple="multiple" name="files" class="btn btn-info" />
+
+                        </div>
+                    </div>
+
+
+                </div>
+                        }
+                        else if (rid == 4 && Model.AssignTo != null)
+                        {
+                <div class="panel panel-default col-sm-10">
+                    <div class="panel-body">
+                        <div class="col-sm-12">
+                            <div class="input-group">
+
+                                @Html.TextAreaFor(m => m.Comment, new { @class = "form-control", @style = "height:200px;" })
+                                @*@Html.ValidationMessageFor(m=>m.Comment)*@
+                                <span class="input-group-btn">
+                                    <button class="btn btn-success" type="submit">Send</button>
+                                </span>
+                            </div>
+
+                        </div>
+                        <div class="col-sm-12" style="height: 10px;"></div>
+                        @if (rid == 1)
+                        {
+                            <div class="col-sm-3" style="display: block; position: relative; float: left; top: -5px;">
+
+                                @*<div class="input-group">*@
+                                @Html.DropDownListFor(m => m.TicketStatusID, new SelectList(Model.ListTstatus, "TicketStatusID", "TicketStatus"), "--Select Status--", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.TicketStatusID)
+                                @Html.HiddenFor(m => m.TicketStatusID)
+                                @*<span class="input-group-btn">
+                                        <button class="btn btn-danger" type="submit">Change Status</button>
+                                    </span>
+                                </div>*@
+
+                            </div>
+                            <div class="col-sm-3" style="display: block; position: relative; float: left; top: -5px;">
+
+                                @Html.DropDownListFor(m => m.AssignTo, new SelectList(Model.StaffList, "UID", "FirstName"), "--Select Staff--", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.AssignTo)
+
+                            </div>
+                        }
+                        else if (rid == 4)
+                        {
+                            <div class="col-sm-6" style="display: block; position: relative; float: left; top: -5px;">
+
+                                @*<div class="input-group">*@
+                                @Html.DropDownListFor(m => m.TicketStatusID, new SelectList(Model.ListTstatus, "TicketStatusID", "TicketStatus"), "--Select Status--", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.TicketStatusID)
+                                @Html.HiddenFor(m => m.TicketStatusID)
+                                @*<span class="input-group-btn">
+                                        <button class="btn btn-danger" type="submit">Change Status</button>
+                                    </span>
+                                </div>*@
+                                @Html.HiddenFor(m => m.AssignTo)
+                            </div>
+                    
+                        }
+                        <div class="col-sm-6" style="display: block; position: relative; float: right; top: -5px; margin-right: -63px;">
+
+                            @*<input type="file" class="form-control btn btn-primary" />*@
+                            <input type="file" id="file" multiple="multiple" name="files" class="btn btn-info" />
+
+                        </div>
+                    </div>
+
+
+                </div>
+                        }
+                        else
+                        {
+                <div class="alert alert-danger col-sm-10">
+
+                    <strong>Assigned!</strong>&nbsp;This ticket has been assigned to <span class="label label-success">@assign.Title @assign.FirstName @assign.LastName</span>
+                </div>
+                        }
+              }
+              else
+              {
+                <div class="panel panel-info col-sm-2" style="background-image: url(/Content/images/fullwidth-bg/pattern-bg1.jpg); background-position: 50% 49px; box-shadow: 0px 0px 5px 1px;">
+                    <div class="panel-heading">
+                        <i class="fa fa-user"></i>&nbsp;@Model.UserDetails.Title @Model.UserDetails.FirstName @Model.UserDetails.LastName
+                    </div>
+                    <div class="panel-body" style="padding: 0px; overflow-wrap: break-word;">
+                        <b>Company :</b>@if (Model.CompDetails != null)
+                                        { @Model.CompDetails.Name}<br />
+                        <b>Ticket ID : </b>@Model.Prefix@Model.TicketID<br />
+                        <b>Category : </b>@Model.TTypeDetails.TicketType<br />
+                        <b>Sub Category :</b>@Model.TTypeDetails.SubType<br />
+                        <b>Priority : </b>@if (@Model.Priority == 1)
+                                          {
+                            <span class="label label-danger">High</span>
+                                          }
+                                          else if (@Model.Priority == 2)
+                                          {
+                            <span class="label label-success">Medium</span>
+                                          }
+                                          else if (@Model.Priority == 3)
+                                          {
+                            <span class="label label-info">Normal</span>   
+                                          }
+                                          else
+                                          {
+                            <span class="label label-default">Other</span>   
+                                          }<br />
+                        <b>Phone :</b> @Model.UserDetails.Phone<br />
+                        <b>Email :</b>@Model.UserDetails.Email<br />
+                        <b>City : </b>@Model.UserDetails.City
+                    </div>
+                </div>
+                <div class="panel panel-info col-sm-10" style="background-image: url(/Content/images/fullwidth-bg/pattern-bg1.jpg); background-position: 50% 49px; box-shadow: 0px 0px 5px 1px;">
+                    <div class="panel-heading">
+                        <i class="fa fa-comments-o" aria-hidden="true"></i>&nbsp;Ticket Convertation
+                    </div>
+                    <div class="panel-body">
+
+                        @*
+                        <div class="right col-sm-10" style="padding: 5px; margin: 5px;">
+                            <span class="label label-primary">You</span><br />
+                            <pre style="border: none; color: black; background-color: inherit; margin-bottom: -10px;">@Model.Description</pre>
+                            <p style="font-size: smaller; margin-left: 10px;">@Convert.ToDateTime(Model.CreatedDate).ToString("dd/MM/yyyy HH:mm")</p>
+                        </div>*@
+                        <div class="col-sm-10" style="height: 5px;"></div>
+                        @foreach (var i in Model.ListTicketTran)
+                        {
+                            if (i.UserDetails.Role == 1 || i.UserDetails.Role == 4)
+                            {
+                            <div class="left col-sm-10" style="padding: 5px; margin: 5px;">
+                                @*<span class="label label-success">Admin</span><br />*@
+                              @*  @if(@i.ReplayBy==i.UserDetails.UID)
+                                {
+                                    <span class="label label-primary">You</span><br />
+                                }
+                                else
+                                {
+                                *@<span class="label label-success">@i.UserDetails.Title @i.UserDetails.FirstName @i.UserDetails.LastName</span><br />
+                                @*}*@
+                                @if (@i.Comment != null)
+                                {
+                                    <pre style="color: black;">@i.Comment</pre>
+                                }
+                                @if (@i.FileName != null)
+                                {
+                                    <a href="@i.FileURL" target="_blank">
+                                        <img alt="attachment" style="margin-top:5px;" src="@i.FileURL" height="200px" width="250px" onError="this.onerror=null;this.src='/Content/images/File_Download.png';" class="img-rounded">
+                                    </a>
+                                    <span style="margin-left: 15px;">@i.FileName</span>
+                                }
+                                <p style="font-size: smaller; margin-left: 10px;">
+                                    @if (@i.ReplayDate != null)
+                                    {@Convert.ToDateTime(@i.ReplayDate).ToString("dd/MM/yyyy HH:mm")}
+                                    else
+                                    {@Convert.ToDateTime(@i.CreatedDate).ToString("dd/MM/yyyy HH:mm")}
+                                </p>
+                            </div>                                                                                                                                                                 
+                            }
+                            else
+                            {
+                            <div class="right col-sm-10" style="padding: 5px; margin: 5px;">
+                                @*<span class="label label-primary">You</span><br />*@
+                                @if (@i.ReplayBy == null)
+                                {
+                                    var creator = Dbcontext.UserMasters.Where(m => m.UID == @i.CreatedBy).SingleOrDefault();
+                                    <span class="label label-primary">@creator.Title @creator.FirstName @creator.LastName</span><br />
+                                }
+                                else
+                                {                                                                        
+                                <span class="label label-primary">@i.UserDetails.Title @i.UserDetails.FirstName @i.UserDetails.LastName</span><br />
+                                }
+                                @if (@i.Comment != null)
+                                {
+                                    <pre style="border: none; color: black; background-color: inherit; margin-bottom: -10px;">@i.Comment</pre>
+                                }
+                                @if (@i.FileName != null)
+                                {
+                                    <a href="@i.FileURL" target="_blank">
+                                        <img alt="attachment" style="margin-top:5px;" src="@i.FileURL" height="200px" width="250px" onError="this.onerror=null;this.src='/Content/images/File_Download.png';" class="img-rounded">
+                                    </a>
+                                    <span style="margin-left: 15px;">@i.FileName</span>
+                                }
+                                <p style="font-size: smaller; margin-left: 10px;">
+                                    @if (@i.ReplayDate != null)
+                                    {@Convert.ToDateTime(@i.ReplayDate).ToString("dd/MM/yyyy HH:mm")}
+                                    else
+                                    {@Convert.ToDateTime(@i.CreatedDate).ToString("dd/MM/yyyy HH:mm")}
+                                </p>
+                            </div> 
+                            }
+@*foreach (var at in Model.ListTA)
+                            {
+                                int uid = 0;
+                                if (Session["UID"] != null)
+                                {
+                                    uid = Convert.ToInt32(Session["UID"].ToString());
+                                }
+
+                                if (uid == @at.ReplayBy)
+                                {
+                            <div class="right col-sm-10" style="padding: 5px; margin: 5px;">
+                                <span class="label label-primary">You@ </span>
+                                <br />
+                                <a href="@at.FileURL" target="_blank">
+                                    <img alt="product" src="@at.FileURL" height="200px" width="250px" onerror="this.onerror=null;this.src='/Content/images/File_Download.png';" class="img-rounded"></a>
+                                <span style="margin-left: 15px;">@at.FileName</span>
+                                <p style="font-size: smaller; margin-left: 10px;">@Convert.ToDateTime(@i.ReplayDate).ToString("dd/MM/yyyy HH:mm")</p>
+                            </div>
+                            }
+                                else
+                                {
+                            <div class="left col-sm-10" style="padding: 5px; margin: 5px;">
+                                <span class="label label-success">Techflow</span>
+                                <br />
+                                <a href="@at.FileURL" target="_blank">
+                                    <img alt="product" src="@at.FileURL" height="200px" width="250px" onerror="this.onerror=null;this.src='/Content/images/File_Download.png';" class="img-rounded"></a>
+                                <span style="margin-left: 15px;">@at.FileName</span>
+                                <p style="font-size: smaller; margin-left: 10px;">@Convert.ToDateTime(@i.ReplayDate).ToString("dd/MM/yyyy HH:mm")</p>
+                            </div>
+                            }
+                            }*@
+
+                        }
+
+                        <div class="right col-lg-1" id="dvImg2" style="padding: 5px; margin: 5px;">
+
+                            <div id="image-holder1" style="float: right;" class="img-rounded"></div>
+                        </div>
+                    </div>
+                </div>
+                        //if (rid == 2)
+                        //{                            
+                <div class="col-sm-2"></div>
+                <div class="panel panel-default col-sm-10">
+                    <div class="panel-body">
+                        <div class="col-sm-12">
+                            <div class="input-group">
+                                @Html.TextAreaFor(m => m.Comment, new { @class = "form-control", @style = "height:200px;" })
+                                <span class="input-group-btn">
+                                    <button class="btn btn-success" type="submit">Send</button>
+                                </span>
+                            </div>
+                        </div>
+                        @Html.HiddenFor(m => m.AssignTo)
+                        @Html.HiddenFor(m => m.TicketStatusID)
+                        <div class="col-sm-12" style="height: 10px;"></div>
+                        <div class="col-sm-6"></div>
+                        <div class="col-sm-6">
+
+
+                            <input type="file" id="file" multiple="multiple" name="files" class="btn btn-info" />
+
+
+                        </div>
+                    </div>
+
+
+                </div>
+                        //}
+
+              }
+            }
+        </div>
+    </section>
+}
+
+
+<script>
+    $(document).ready(function () {
+        $("#dvImg1").hide();
+        $("#dvImg2").hide();
+    });
+    $("#file").on('change', function () {
+
+        //Get count of selected files
+        var countFiles = $(this)[0].files.length;
+
+        var imgPath = $(this)[0].value;
+        var extn = imgPath.substring(imgPath.lastIndexOf('.') + 1).toLowerCase();
+        var image_holder = $(".img-rounded");
+        image_holder.empty();
+
+        if (extn == "gif" || extn == "png" || extn == "jpg" || extn == "jpeg" || extn == "pdf" || extn == "xlsx" || extn == "zip" || extn == "rar" || extn == "doc" || extn == "xls" || extn == "txt") {
+            if (typeof (FileReader) != "undefined") {
+                $("#dvImg1").show();
+                $("#dvImg2").show();
+                //loop for each file selected for uploaded.
+                for (var i = 0; i < countFiles; i++) {
+
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        $("<img />", {
+                            "src": e.target.result,
+                            "class": "img-rounded thumb-image",
+                            "alt": "Document"
+                        }).appendTo(image_holder);
+                    }
+
+                    image_holder.show();
+                    reader.readAsDataURL($(this)[0].files[i]);
+                }
+
+            } else {
+                alert("This browser does not support FileReader.");
+            }
+        } else {
+            alert("Please select valid document type");
+        }
+    });
+</script>

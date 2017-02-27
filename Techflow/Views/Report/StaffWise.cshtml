@@ -1,0 +1,127 @@
+﻿@{
+    ViewBag.Title = "Staff Wise Tickets Report-" + @TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("India Standard Time")).ToString("dd/MM/yyyy hh:mm tt");
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@using Models.ViewModel
+@model TicketModel
+@using (@Html.BeginForm("StaffWise", "Report", FormMethod.Post, new { @id = "frmComp", enctype = "multipart/form-data" }))
+{
+
+    if (Session["Role"] != null)
+    {
+        int role = Convert.ToInt32(Session["Role"].ToString());
+        if (role == 1)
+        {
+      
+
+    <!-- **Breadcrumb Section** -->
+    <div class="breadcrumb-section">
+        <div class="container">
+            <h1>Staff Wise Ticket Report</h1>
+            <div class="breadcrumb">
+                <a href="/Dashboard/Index" title="">Home</a> / <span>Ticket</span>
+            </div>
+        </div>
+    </div>
+    <!-- **Breadcrumb Section Ends** -->
+
+    <!-- **Content Main** -->
+    <section class="content-main">
+        <!-- **Container** -->
+        <div class="container">
+            <fieldset class="scheduler-border">
+                <legend class="scheduler-border">Refine</legend>
+                @*@Html.Label("* From Date", new { @class = "col-sm-2 control-label" })
+                <div class="col-sm-4">
+                    @Html.TextBoxFor(m => m.FromDate, new { @class = "form-control datepicker" })
+                    @Html.ValidationMessageFor(m => m.FromDate)
+
+                </div>
+                @Html.Label("* To Date", new { @class = "col-sm-2 control-label" })
+                <div class="col-sm-4">
+                    @Html.TextBoxFor(m => m.ToDate, new { @class = "form-control datepicker" })
+                    @Html.ValidationMessageFor(m => m.ToDate)
+
+                </div>
+                <div class="col-sm-12" style="height: 5px;"></div>*@
+           @*     @Html.Label("Company", new { @class = "col-sm-2 control-label" })
+                <div class="col-sm-4">
+                    
+                    @Html.DropDownListFor(m => m.comp, new SelectList(Model.ListComp, "CompID", "Name"), "--Select Company--", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.comp)
+                </div>*@
+            @Html.Label("Staff", new { @class = "col-sm-2 control-label" })
+                    <div class="col-sm-4">
+                        @Html.DropDownListFor(m => m.AssignTo, new SelectList(Model.StaffList, "UID", "FirstName"), "--Select Staff--", new { @class = "form-control" })
+
+                    </div>
+                <div class="col-sm-12" style="height: 5px;"></div>
+                <input type="submit" name="btnsend" value="Go" class="dt-sc-button small" />
+            </fieldset>
+
+            @if (Model.ListTicket != null)
+            {
+                <div class="panel panel-info" style="background-image: url(/Content/images/fullwidth-bg/pattern-bg1.jpg); background-position: 50% 49px; box-shadow: 0px 0px 5px 1px;">
+                    <div class="panel-heading" style="position: relative;">
+                        Ticket Details                    
+                    </div>
+                    <div class="panel-body">
+                        <table class="table" id="tblT">
+                            <thead>
+                                <tr>
+                                    <th>Company</th>
+                                    <th>Open</th>
+                                    <th>Resolved</th>
+                                    <th>OnHold</th>
+                                    
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var i in Model.ListTicket)
+                                {                                    
+                                    <tr>
+                                        <td>@i.CompName</td>
+                                        <td>@i.Open</td>
+                                        <td>@i.Resolved</td>
+                                        <td>@i.OnHold</td>                                                                 
+                                    </tr>                                    
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            }
+        </div>
+    </section>
+        }
+    }
+
+}
+
+
+<script>
+    $(document).ready(function () {
+
+
+
+        $('#tblT').DataTable({
+
+            //dom: 'Bfrtip',
+            //buttons: [
+            //    //'copy', 'csv', 'excel', 'pdf', 'print'
+            //    'pdf'            
+            //],
+            dom: 'Bfrtip',
+            buttons: [
+                {
+                    extend: 'pdf',
+                    exportOptions: {
+                        columns: ':visible'
+                    }
+                },
+                //'colvis'
+            ]
+        });
+    });
+</script>
+
