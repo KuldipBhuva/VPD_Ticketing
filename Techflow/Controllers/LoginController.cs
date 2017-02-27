@@ -153,7 +153,7 @@ namespace Techflow.Controllers
                         //    }
                         //}
                         message.IsBodyHtml = true;
-                        //message.CC.Add(new MailAddress(Convert.ToString("kuldipbhuva5@gmail.com"), "Distributer Order"));
+                        
                         message.CC.Add(new MailAddress(Convert.ToString("kuldip@newtechinfosoft.in"), "Kuldip Patel"));
                         //message.CC.Add(new MailAddress(Convert.ToString("info@sugamhealthcare.com"), "Info-Sugam Health Care"));
                         smtp.Send(message);

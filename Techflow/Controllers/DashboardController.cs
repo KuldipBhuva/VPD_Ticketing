@@ -143,13 +143,13 @@ namespace Techflow.Controllers
                                 //    }
                                 //}
                                 message.IsBodyHtml = true;
-                                //message.CC.Add(new MailAddress(Convert.ToString("kuldipbhuva5@gmail.com"), "Distributer Order"));
+                                
                                 //var user = Dbcontext.UserMasters.Where(m => m.CompID == @cby.CompID && m.Role == 2).ToList();
                                 //foreach (var u in user)
                                 //{
                                 //    message.CC.Add(new MailAddress(Convert.ToString(u.Email), u.FirstName));
                                 //}
-                                //message.CC.Add(new MailAddress(Convert.ToString("kuldipbhuva5@gmail.com"), "Kuldip"));
+                                
                                 //message.CC.Add(new MailAddress(Convert.ToString("info@sugamhealthcare.com"), "Info-Sugam Health Care"));
                                 smtp.Send(message);
                                 TempData["Msg"] = "Mail Successfully Sent.";
@@ -234,8 +234,8 @@ namespace Techflow.Controllers
                                 //    }
                                 //}
                                 message.IsBodyHtml = true;
-                                //message.CC.Add(new MailAddress(Convert.ToString("kuldipbhuva5@gmail.com"), "Distributer Order"));
-                                message.CC.Add(new MailAddress(Convert.ToString("kuldipbhuva5@gmail.com"), "Kuldip"));
+                                
+                                message.CC.Add(new MailAddress(Convert.ToString("kuldip@newtechinfosoft.in"), "Kuldip"));
                                 //message.CC.Add(new MailAddress(Convert.ToString("info@sugamhealthcare.com"), "Info-Sugam Health Care"));
                                 smtp.Send(message);
                                 TempData["Msg"] = "Mail sent successfully.";
